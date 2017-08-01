@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+    <environments default="oracle">
+        <environment id="oracle">
+
+            <transactionManager type="jdbc"></transactionManager>
+
+            <dataSource type="pooled">
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@192.168.1.200:1521:yydb"/>
+                <property name="username" value="fhseed"/>
+                <property name="password" value="fhseed"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/TeTest2Mapper.xml"/>
+        <mapper resource="mapper/EmpMapper.xml"/>
+    </mappers>
+</configuration>

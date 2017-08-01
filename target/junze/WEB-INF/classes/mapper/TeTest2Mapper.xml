@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="test">
+    <resultMap id="test2Map" type="model.TeTest2">
+        <id column="id" property="id"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age"/>
+        <result column="bonus" property="bonus"/>
+        <result column="dept" property="dept"/>
+        <result column="sal" property="sal"/>
+
+    </resultMap>
+
+    <insert id="add" parameterType="model.TeTest2">
+      INSERT INTO te_test2(id,worker_name,age,sal,bonus,dept) VALUES (1,'test001',18,4000,10,10)
+    </insert>
+
+    <insert id="add2" parameterType="model.TeTest2">
+        INSERT INTO te_test2(id,worker_name,age,sal,bonus,dept) VALUES (#{id},#{workerName},#{age},#{sal},#{bonus},#{dept})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="model.TeTest2">
+            select t.p_name name from te_test2 t where id = #{id}
+    </select>
+    <select id="selectAll" resultType="model.TeTest2">
+        SELECT t.p_name name,age,bonus,dept,sal from te_test2 t
+    </select>
+
+    <update id="update" parameterType="model.TeTest2">
+        UPDATE te_test2 set p_name = #{name},sal = #{sal} , age = #{age}, bonus = #{bonus}, dept = #{dept} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM te_test2 where id = #{id}
+    </delete>
+
+
+
+</mapper>

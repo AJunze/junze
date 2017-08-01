@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                            http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                            http://www.springframework.org/schema/mvc
+                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                            ">
+
+
+    <!-- 引入属性文件 -->
+    <context:annotation-config />
+
+
+    <!-- 自动扫描(自动注入) -->
+
+    <context:component-scan base-package="dao" />
+
+
+    <context:property-placeholder location="classpath:config.properties" />
+
+
+    <bean name="master_dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${master_jdbc_url}" />
+        <property name="username" value="${master_jdbc_username}" />
+        <property name="password" value="${master_jdbc_password}" />
+        <property name="driverClassName" value="${driverClassName}"/>
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="1" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="100" />
+        <!-- 连接池最大空闲 -->
+        <!-- <property name="maxIdle" value="20" /> -->
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+
+
+    </bean>
+
+    <!-- myBatis文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="master_dataSource" />
+        <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+        <!-- 加载分页插件 -->
+        <!--<property name="plugins" ref="paginationInterceptor" />-->
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="master_dataSource" />
+    </bean>
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="append*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="edit*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+            <tx:method name="repair" propagation="REQUIRED" />
+            <tx:method name="publish*" propagation="REQUIRED" />
+            <tx:method name="match*" propagation="REQUIRED" />
+            <tx:method name="submit*" propagation="REQUIRED" />
+            <tx:method name="grab*" propagation="REQUIRED" />
+            <tx:method name="start*" propagation="REQUIRED" />
+            <tx:method name="end*" propagation="REQUIRED" />
+            <tx:method name="confirm*" propagation="REQUIRED" />
+            <tx:method name="pay*" propagation="REQUIRED" />
+            <tx:method name="reassignment" propagation="REQUIRED" />
+            <tx:method name="forgetPassword" propagation="REQUIRED" />
+            <tx:method name="bind*" propagation="REQUIRED" />
+            <tx:method name="unbind*" propagation="REQUIRED" />
+            <tx:method name="change*" propagation="REQUIRED" />
+            <tx:method name="returnCar*" propagation="REQUIRED" />
+            <tx:method name="closeCar*" propagation="REQUIRED" />
+            <tx:method name="openCar*" propagation="REQUIRED" />
+            <tx:method name="do*" propagation="REQUIRED" />
+
+            <tx:method name="get*" propagation="SUPPORTS" />
+            <tx:method name="find*" propagation="SUPPORTS" />
+            <tx:method name="load*" propagation="SUPPORTS" />
+            <tx:method name="search*" propagation="SUPPORTS" />
+            <tx:method name="datagrid*" propagation="SUPPORTS" />
+
+            <tx:method name="*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!-- 事务管理 -->
+        <!--<aop:pointcut id="transactionPointcut" expression="execution(* service..*Impl.*(..))" />-->
+        <aop:pointcut id="transactionPointcut" expression="execution(* service.*.*(..))" />
+        <aop:advisor pointcut-ref="transactionPointcut"
+                     advice-ref="transactionAdvice" />
+    </aop:config>
+</beans>

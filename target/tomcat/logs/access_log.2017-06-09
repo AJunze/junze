@@ -1,0 +1,9 @@
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:53:28 +0800] "GET /emp/register.html HTTP/1.1" 404 949 http-bio-8080-exec-1 41
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:04 +0800] "GET /emp/register.html HTTP/1.1" 404 949 http-bio-8080-exec-1 35
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:16 +0800] "GET /emp/register.html HTTP/1.1" 404 949 http-bio-8080-exec-2 1
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:22 +0800] "GET /register.html HTTP/1.1" 200 1034 http-bio-8080-exec-3 622
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:42 +0800] "GET /login.html HTTP/1.1" 404 949 http-bio-8080-exec-4 1
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:49 +0800] "GET /login.jsp HTTP/1.1" 200 122 http-bio-8080-exec-5 53
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:11:57:50 +0800] "GET /register.html HTTP/1.1" 200 1034 http-bio-8080-exec-6 2
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:12:33:42 +0800] "GET /register.html HTTP/1.1" 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [09/Jun/2017:12:38:22 +0800] "GET /register.html HTTP/1.1" 404 949 http-bio-8080-exec-1 38

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="empNameSpace">
+    <resultMap id="emp" type="model.Emp">
+        <id column="eid" property="id"/>
+        <result column="ename" property="name"/>
+        <result column="esal" property="sal"/>
+        <result column="esex" property="sex"/>
+    </resultMap>
+
+    <insert id="add" parameterType="model.Emp">
+        INSERT INTO emps(eid,ename,esal,esex) VALUES (#{id},#{name},#{sal},#{sex})
+    </insert>
+
+    <insert id="add2" parameterType="model.TeTest2">
+        INSERT INTO te_test2(id,worker_name,age,sal,bonus,dept) VALUES (#{id},#{workerName},#{age},#{sal},#{bonus},#{dept})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="model.TeTest2">
+        select t.p_name name from te_test2 t where id = #{id}
+    </select>
+    <select id="selectAll" resultType="model.TeTest2">
+        SELECT t.p_name name,age,bonus,dept,sal from te_test2 t
+    </select>
+
+    <update id="update" parameterType="model.TeTest2">
+        UPDATE te_test2 set p_name = #{name},sal = #{sal} , age = #{age}, bonus = #{bonus}, dept = #{dept} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM te_test2 where id = #{id}
+    </delete>
+
+
+
+</mapper>

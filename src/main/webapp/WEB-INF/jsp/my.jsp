@@ -14,7 +14,7 @@
 
 html
 	<c:if test="${true}">success</c:if>
-	<form action="/servlet">
+	<form action="/login">
 		用户名：<input title="" type="text" id="user" name="user" value="请输入账号"  onclick= "a123()"/>
 		密码：<input title="请输入密码" class="password" type="password" value="" />
 		<div id="div" onclick="a123()">123 </div>
@@ -39,7 +39,7 @@ html
 		$(".password").val(null);
 	} */
 	function submit(){
-		var form = $(":form"); 
+		var form = $(":form");
 		alert();
 	}
 	</script>
